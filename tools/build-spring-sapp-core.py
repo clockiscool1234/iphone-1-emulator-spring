@@ -32,9 +32,10 @@ def main():
     old = "new ArrayBuffer(536870912)"
     if text.count(old) != 1:
         raise SystemExit("unexpected wasm2js memory declaration")
-    # The SAPP boots with the real 128 MB device RAM and no rootfs. 192 MB
-    # leaves room for EDRAM, input firmware, the C heap and the 4 MB stack.
-    text = text.replace(old, "new ArrayBuffer(201326592)")
+    # The no-rootfs SAPP uses 64 MB of guest RAM. A 128 MB translated heap
+    # leaves room for EDRAM, input firmware, the C heap and the 4 MB stack while
+    # avoiding the one-turn cost of allocating the browser build's 512 MB heap.
+    text = text.replace(old, "new ArrayBuffer(134217728)")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(HEADER + text + "\nmodule.exports = instantiate;\n")
     print(args.output)

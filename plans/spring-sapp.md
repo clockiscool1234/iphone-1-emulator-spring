@@ -18,12 +18,13 @@ By default the app fetches text-only base64 chunks from the repository's direct
 Spring's QuickJS sandbox has no WebAssembly or native-code API. Binaryen
 `wasm2js` 132.0.0 translates the committed `web/dist/emu.wasm` to a 2.85 MB
 plain-JavaScript module. `tools/build-spring-sapp-core.py` performs that
-translation, changes the fixed Emscripten heap from 512 MB to 192 MB, and adds
+translation, changes the fixed Emscripten heap from 512 MB to 128 MB, and adds
 the CommonJS export Spring's `require` expects.
 
 The Spring host:
 
-- allocates 128 MB of emulated DRAM;
+- allocates 64 MB of emulated DRAM, which is sufficient for this no-rootfs
+  kernel milestone and reduces Spring's synchronous boot-setup turn;
 - decodes imported base64 firmware into the translated C heap in 128 KiB turns;
 - downloads each network chunk as text through Spring `fetch` and decodes it
   directly into the translated C heap;
@@ -74,13 +75,13 @@ python3 ../../tools/spring_pack.py pack spring/s5lbox-kernel -o spring/S5LBox-Ke
 ## Verification
 
 The translated core was exercised under Node with the local 1A543a kernel and
-device tree, 128 MB guest RAM, and no rootfs. It emitted the genuine serial
+device tree, 64 MB guest RAM, and no rootfs. It emitted the genuine serial
 banner and continued through VM initialization:
 
 ```text
 Darwin Kernel Version 9.0.0d1: Tue May 22 21:15:55 PDT 2007; root:xnu-933.0.0.178.obj~3/RELEASE_ARM_S5L8900XRB
 standard timeslicing quantum is 10000 us
-vm_page_bootstrap: 28461 free pages and 4307 wired pages
+vm_page_bootstrap: 12300 free pages and 4084 wired pages
 mig_table_max_displ = 79
 iBoot version:
 ```
@@ -89,3 +90,18 @@ The Node proof reached 20,000,000 guest instructions with CPU status `ARM_OK`.
 Measured speed on this host was about 1.16 MIPS for the wasm2js interpreter.
 Actual Spring/Android performance remains device-dependent and must be checked
 on a phone.
+
+### Device correction: build 2
+
+The first phone run reached “Constructing XNU boot state” but Spring ended its
+timer turn after `emu_init` exceeded the one-second limit. It also demonstrated
+why every installable revision needs a higher manifest build: an already
+installed build 1 could retain the earlier pre-fork firmware URL and report 404
+even after a corrected build-1 package was copied over it.
+
+Build 2 uses 64 MB guest RAM and a 128 MB translated heap instead of 128/192 MB,
+and identifies itself as version 0.2 so Spring installs it as an update. The
+64 MB configuration reaches `vm_page_bootstrap` and MIG initialization through
+12 million instructions with `ARM_OK` in the host verification. Whether the
+reduced setup completes within one second on the reported Android phone remains
+to be confirmed on-device.

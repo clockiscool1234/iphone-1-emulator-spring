@@ -189,7 +189,7 @@ function initActiveSegments(imports) {
   }
       
 function asmFunc(imports) {
- var buffer = new ArrayBuffer(201326592);
+ var buffer = new ArrayBuffer(134217728);
  var HEAP8 = new Int8Array(buffer);
  var HEAP16 = new Int16Array(buffer);
  var HEAP32 = new Int32Array(buffer);

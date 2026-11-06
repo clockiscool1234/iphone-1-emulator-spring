@@ -1,8 +1,8 @@
 {
   "id": "com.example.s5lbox-kernel",
   "name": "S5LBox Kernel",
-  "version": "0.1",
-  "build": 1,
+  "version": "0.2",
+  "build": 2,
   "minSpring": 6,
   "genre": "Utilities",
   "statusBarStyle": "blackOpaque",

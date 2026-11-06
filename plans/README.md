@@ -35,7 +35,7 @@ The key split is: shared S5L8900 SoC code in `core/src/soc/`, and per-board wiri
 **Spring SAPP kernel console (2026-11-06):** translated the committed WebAssembly
 core to plain JavaScript with Binaryen `wasm2js`, added a Spring host that fetches
 sub-5-MB base64 chunks or imports local 1A543a kernel/device-tree files, and booted the genuine kernel with
-128 MB RAM and no rootfs. The Node verification reached 20M instructions with
+64 MB RAM and no rootfs. The Node verification reached 20M instructions with
 the Darwin banner and VM bootstrap output over UART. The app source and package
 are under `spring/`; physical Spring/Android
 performance is not yet qualified. See [the SAPP port log](spring-sapp.md).

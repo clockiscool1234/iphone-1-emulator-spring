@@ -212,9 +212,10 @@ function decodeRemote(parts, expectedBytes, label, token, done) {
       return;
     }
     var name = parts[partIndex];
+    var url = REMOTE_BASE + name;
     setPhase("Downloading " + label + " · part " + (partIndex + 1) + "/" + parts.length);
-    fetch(REMOTE_BASE + name).then(function (response) {
-      if (!response.ok) throw new Error("HTTP " + response.status + " for " + name);
+    fetch(url).then(function (response) {
+      if (!response.ok) throw new Error("HTTP " + response.status + " for " + url);
       return response.text();
     }).then(function (encoded) {
       var sourceAt = 0;
@@ -259,7 +260,7 @@ function startBoot() {
   bootButton.enabled = true;
   terminal.clear();
   writeText("S5LBox / iPhone1,1\r\n" +
-    "Direct XNU handoff, 128 MB RAM\r\n" +
+    "Direct XNU handoff, 64 MB RAM\r\n" +
     "No root filesystem is attached.\r\n\r\n");
   refreshTerminal(true);
   totalInstructions = measuredInstructions = 0;

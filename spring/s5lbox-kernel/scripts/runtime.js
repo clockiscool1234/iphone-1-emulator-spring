@@ -105,7 +105,7 @@ Runtime.prototype.decodedSize = decodedSize;
 
 Runtime.prototype.boot = function (kernelPointer, kernelSize, treePointer, treeSize) {
   var result = this.exports.n(kernelPointer, kernelSize, treePointer, treeSize,
-                              0, 0, 128);
+                              0, 0, 64);
   if (result !== 0) throw new Error(this.error() || "S5LBox initialization failed");
 };
 
