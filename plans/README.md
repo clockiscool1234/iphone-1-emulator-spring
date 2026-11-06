@@ -39,6 +39,9 @@ sub-5-MB base64 chunks or imports local 1A543a kernel/device-tree files, and boo
 the Darwin banner and VM bootstrap output over UART. The app source and package
 are under `spring/`; physical Spring/Android
 performance is not yet qualified. See [the SAPP port log](spring-sapp.md).
+Build 3 applies Binaryen's QuickJS-effective `-O3` lowering and a 90%-duty turbo
+scheduler after build 2 measured only 90–120 KIPS on a phone; see the port log
+for measured limits and why the retained browser seed is not shipped.
 
 **README refresh (2026-10-13):** rewrote the project guide with the ASD-STE100 writing skill. The guide separates default offline workflows from isolated service experiments, lists unresolved hardware and product issues, and links dated performance evidence. Build, control, save, firmware, and test instructions now follow the current main-branch code.
 

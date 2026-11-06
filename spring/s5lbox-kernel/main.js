@@ -34,7 +34,7 @@ function setPhase(text) {
 
 function refreshTerminal(force) {
   var now = Date.now();
-  if (!force && now - lastTerminalRender < 180) return;
+  if (!force && now - lastTerminalRender < 500) return;
   var data = BitmapTerminal(terminal.textLines(), [4, 7, 8], [158, 225, 154]);
   terminalImageIndex ^= 1;
   var path = "s5lbox-terminal-" + terminalImageIndex + ".png";
@@ -82,7 +82,7 @@ function uartOutput(byte) {
 }
 
 var screen = new UIGameView({
-  frame: [0, 0, 320, 416], background: "#040708", fps: 30
+  frame: [0, 0, 320, 416], background: "#040708", fps: 10
 });
 
 var statusLabel = new UILabel({
@@ -112,7 +112,7 @@ var navigation = new UINavigationController(controller, { barStyle: "black" });
 screen.update = function () {
   if (ready && vm) {
     try {
-      var result = vm.runSlice(30000, 18);
+      var result = vm.runSlice(100000, 90);
       totalInstructions += result.instructions;
       measuredInstructions += result.instructions;
       var now = Date.now();
@@ -122,13 +122,12 @@ screen.update = function () {
                           Math.round(ips / 1000) + " KIPS";
         measuredInstructions = 0;
         measuredAt = now;
+        setPhase("XNU running · " + Math.round(totalInstructions / 1000) + "K instructions");
       }
       if (result.status !== 0) {
         ready = false;
         bootButton.title = "Boot";
         setPhase("CPU stopped · status " + result.status);
-      } else {
-        setPhase("XNU running · " + Math.round(totalInstructions / 1000) + "K instructions");
       }
     } catch (error) {
       fail("CPU execution", error);

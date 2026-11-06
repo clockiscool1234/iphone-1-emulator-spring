@@ -105,3 +105,26 @@ and identifies itself as version 0.2 so Spring installs it as an update. The
 12 million instructions with `ARM_OK` in the host verification. Whether the
 reduced setup completes within one second on the reported Android phone remains
 to be confirmed on-device.
+
+### QuickJS throughput correction: build 3
+
+The build-2 phone reports roughly 90–120 KIPS. A native QuickJS reproduction
+confirms that this is execution-engine cost rather than only rendering: the
+original wasm2js output runs the measured cold-kernel million at 66–69 KIPS.
+
+Build 3 runs Binaryen `-O3` while translating the core. The result shrinks from
+2.85 MB to about 1.77 MB and executes the same native-QuickJS workload at
+117–118 KIPS, about 1.7 times baseline. It also changes the Spring scheduler
+from 30 updates with an 18 ms CPU budget per second to 10 updates with a 90 ms
+budget, raises the per-turn instruction ceiling, refreshes the terminal at most
+twice a second, and changes status text once a second rather than every frame.
+The nominal emulation duty rises from 54% to 90% while each turn remains far
+below Spring's one-second limit.
+
+The existing browser seed compiler was evaluated as a second accelerator. The
+16 hottest retained cold-boot regions cover about 5.0 million of the first 12
+million guest instructions, but their 1.6 MB wasm2js translation did not improve
+the first million and improved a later measured phase by only about 14%. It is
+not shipped. Reaching sustained MIPS in QuickJS likely requires a purpose-built
+JavaScript block translator or WebAssembly/native execution support in Spring;
+build 3 is expected to improve the phone by roughly 2.5–3 times, not 10 times.

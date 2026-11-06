@@ -26,7 +26,7 @@ def main():
     source = ROOT / "web" / "dist" / "emu.wasm"
     with tempfile.TemporaryDirectory() as directory:
         translated = pathlib.Path(directory) / "core.js"
-        subprocess.run([args.wasm2js, str(source), "--emscripten", "--all-features",
+        subprocess.run([args.wasm2js, str(source), "--emscripten", "--all-features", "-O3",
                         "-o", str(translated)], check=True)
         text = translated.read_text()
     old = "new ArrayBuffer(536870912)"
