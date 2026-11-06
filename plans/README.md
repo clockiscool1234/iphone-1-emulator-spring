@@ -32,6 +32,14 @@ The key split is: shared S5L8900 SoC code in `core/src/soc/`, and per-board wiri
 
 ## Status
 
+**Spring SAPP kernel console (2026-11-06):** translated the committed WebAssembly
+core to plain JavaScript with Binaryen `wasm2js`, added a Spring host that fetches
+sub-5-MB base64 chunks or imports local 1A543a kernel/device-tree files, and booted the genuine kernel with
+128 MB RAM and no rootfs. The Node verification reached 20M instructions with
+the Darwin banner and VM bootstrap output over UART. The app source and package
+are under `spring/`; physical Spring/Android
+performance is not yet qualified. See [the SAPP port log](spring-sapp.md).
+
 **README refresh (2026-10-13):** rewrote the project guide with the ASD-STE100 writing skill. The guide separates default offline workflows from isolated service experiments, lists unresolved hardware and product issues, and links dated performance evidence. Build, control, save, firmware, and test instructions now follow the current main-branch code.
 
 **Open-source cleanup (2026-10-14):** added the GPL-2.0-or-later `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, and Apple disclaimer. The JIT replay tool now maps manifest firmware URLs to the source copies in `web/firmware/`, and the unused GitHub Pages workflow is removed. The `docs/traces/` archive (about 10.8k files) was removed from the tree; the reports are downloadable as a tarball from the [`traces-archive` release](https://github.com/kelindi/iphone-1/releases/tag/traces-archive) and links below name the archived `docs/traces/` path, and the few fixtures tests need moved to `tools/jit/adaptive/fixtures/` and `tools/legacy_services/fixtures/weather-demo-backend/`. The optional AArch64 static engine (`a64_static_engine.c`) was deleted because its generator `tools/gen_a64_static.py` never existed in the repository.

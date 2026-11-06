@@ -1,0 +1,20 @@
+{
+  "format": 1,
+  "encoding": "base64",
+  "maxPartChars": 4000000,
+  "kernel": {
+    "bytes": 5888896,
+    "sha256": "42e9f3c18d4a4d5c956acdcded0c3f8f247fe3e7fc96d14cfa3aedcd77c292c9",
+    "parts": [
+      "kernel_1A543a.macho.b64.part0",
+      "kernel_1A543a.macho.b64.part1"
+    ]
+  },
+  "devicetree": {
+    "bytes": 36864,
+    "sha256": "94cbef8175df0d84afbbd3885f7fe7267b9e6f4ba3b80f8d83328800cff93e10",
+    "parts": [
+      "devicetree_m68ap.bin.b64.part0"
+    ]
+  }
+}

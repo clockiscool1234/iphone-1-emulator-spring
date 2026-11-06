@@ -1,0 +1,14 @@
+{
+  "id": "com.example.s5lbox-kernel",
+  "name": "S5LBox Kernel",
+  "version": "0.1",
+  "build": 1,
+  "minSpring": 6,
+  "genre": "Utilities",
+  "statusBarStyle": "blackOpaque",
+  "description": "Boots an original-iPhone XNU kernel in the S5LBox emulator and displays its UART console. Bring your own legally obtained iPhone OS 1.0 kernel and M68AP device tree; no firmware or root filesystem is included.",
+  "prerenderedIcon": true,
+  "permissions": {
+    "network": ["raw.githubusercontent.com"]
+  }
+}

@@ -1,0 +1,14 @@
+S5LBox Kernel for Spring
+
+The emulator is generated from the portable C core in the iphone-1 project:
+https://github.com/clockiscool1234/iphone-1-emulator-spring
+
+The emulator is GPL-2.0-or-later. Its source is under work/iphone-1-emulator in
+the Spring SDK workspace. The full GPL version 2 text is included as
+assets/GPL-2.0.txt.
+
+The terminal bitmap glyphs come from the Linux kernel's lib/fonts/font_8x16.c
+under GPL-2.0. The corresponding source is included as assets/font_8x16.c.
+
+No Apple firmware is included. The user must supply a legally obtained,
+extracted iPhone OS 1.0 kernel and M68AP device tree.
